@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>APEPIX — Mint | Robinhood Chain</title>
+<meta name="description" content="Mint APEPIX pixel apes on Robinhood Chain. Free mint + paid mint." />
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦍</text></svg>" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<div class="bg-grid" aria-hidden="true"></div>
+
+<header class="site-header">
+  <div class="logo">APE<span>PIX</span></div>
+  <div class="header-right">
+    <button id="networkPill" class="pill pill-neutral">Robinhood Chain</button>
+    <button id="connectBtn" class="btn btn-primary">Connect Wallet</button>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="hero-left">
+      <span class="badge">ROBINHOOD CHAIN · L2 · ARBITRUM ORBIT</span>
+      <h1>MINT YOUR <br /><span class="glow">PIXEL APE</span></h1>
+      <p class="lead">
+        APEPIX is a pixel ape collection living on Robinhood Chain.
+        Claim your free mint, or grab more at the mint price.
+        All stats load live from the smart contract — no placeholders, no middleware.
+      </p>
+      <div class="stat-chips">
+        <div class="chip"><span id="statTotal">—</span><small>MINTED</small></div>
+        <div class="chip"><span id="statMax">—</span><small>MAX SUPPLY</small></div>
+        <div class="chip"><span id="statPrice">—</span><small>PRICE</small></div>
+        <div class="chip"><span id="statFreeLeft">—</span><small>FREE LEFT</small></div>
+      </div>
+      <div class="contract-row">
+        <span class="lbl">CONTRACT</span>
+        <a id="contractLink" class="mono" target="_blank" rel="noopener"></a>
+      </div>
+    </div>
+
+    <div class="mint-card">
+      <div class="art-frame"><canvas id="apeCanvas" width="16" height="16"></canvas></div>
+
+      <div class="supply">
+        <div class="supply-top"><span>MINTED</span><span id="supplyText">— / —</span></div>
+        <div class="bar"><div id="supplyBar" class="bar-fill" style="width:0%"></div></div>
+      </div>
+
+      <div class="mint-section">
+        <div class="row">
+          <div class="col">
+            <h3>FREE MINT</h3>
+            <p id="freeInfo" class="sub">loading…</p>
+            <p id="freeWarn" class="warn hidden"></p>
+          </div>
+          <button id="freeMintBtn" class="btn btn-free" disabled>Claim</button>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="row">
+          <div class="col">
+            <h3>PAID MINT</h3>
+            <p id="paidInfo" class="sub">loading…</p>
+            <p id="paidWarn" class="warn hidden"></p>
+          </div>
+          <div class="qty-box">
+            <button id="qtyMinus" aria-label="decrease">−</button>
+            <input id="qtyInput" type="number" min="1" value="1" />
+            <button id="qtyPlus" aria-label="increase">+</button>
+            <button id="qtyMax" class="max-btn">MAX</button>
+          </div>
+        </div>
+
+        <div class="total-row"><span>TOTAL</span><span id="totalCost">— ETH</span></div>
+        <p id="gasLine" class="gas-line mono"></p>
+        <button id="paidMintBtn" class="btn btn-primary btn-block" disabled>Mint</button>
+      </div>
+
+      <p id="walletAddr" class="wallet-line mono"></p>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <span id="footerContract" class="mono dim"></span>
+  <span class="dim">APEPIX · Robinhood Chain · static dApp — runs entirely in your browser</span>
+  <button id="rpcStatus" class="rpc-pill mono" title="Active RPC endpoint — click to cycle">RPC: …</button>
+</footer>
+
+<!-- wallet picker -->
+<div id="walletModal" class="modal hidden">
+  <div class="modal-box">
+    <h3>CONNECT WALLET</h3>
+    <p class="sub">Pick a wallet detected in your browser.</p>
+    <div id="walletList" class="wallet-list"></div>
+    <button id="walletClose" class="btn btn-ghost">Close</button>
+  </div>
+</div>
+
+<!-- tx modal -->
+<div id="txModal" class="modal hidden">
+  <div class="modal-box">
+    <div id="txSpinner" class="spinner"></div>
+    <div id="txCheck" class="check hidden">✓</div>
+    <h3 id="txTitle">Transaction pending…</h3>
+    <p id="txMsg" class="sub">Confirm the transaction in your wallet.</p>
+    <a id="txLink" class="mono tx-link hidden" target="_blank" rel="noopener">View on explorer ↗</a>
+    <button id="txClose" class="btn btn-ghost hidden">Close</button>
+  </div>
+</div>
+
+<div id="toasts"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/5.7.2/ethers.umd.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
