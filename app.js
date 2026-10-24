@@ -916,6 +916,26 @@ function drawApe() {
   });
 }
 
+/* Show square.png inside the art frame. If the file is missing/broken,
+   fall back to the procedurally drawn pixel ape so the frame is never empty. */
+function loadArt() {
+  const img = $("apeArt"), cv = $("apeCanvas");
+  const useImg = () => {
+    img.classList.remove("hidden");
+    cv.classList.add("hidden");
+    // small pixel art → keep crisp nearest-neighbor upscaling;
+    // larger images → smooth scaling instead of a crunchy downscale
+    img.style.imageRendering = img.naturalWidth > 0 && img.naturalWidth <= 208 ? "pixelated" : "auto";
+  };
+  const useFallback = () => {
+    img.classList.add("hidden");
+    cv.classList.remove("hidden");
+    drawApe();
+  };
+  if (img.complete) (img.naturalWidth > 0 ? useImg : useFallback)();
+  else { img.onload = useImg; img.onerror = useFallback; }
+}
+
 /* ---------- UI wiring ---------- */
 $("connectBtn").onclick = openWalletPicker;
 $("freeMintBtn").onclick = freeMint;
@@ -967,7 +987,7 @@ async function checkPill() {
 
 /* ---------- boot ---------- */
 (async function init() {
-  drawApe();
+  loadArt();
   if (typeof ethers === "undefined") {
     $("freeInfo").textContent = "Failed to load ethers.js — check your connection and refresh.";
     return;

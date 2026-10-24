@@ -125,7 +125,8 @@ h1 {
   display: flex; justify-content: center; padding: 20px 0 14px;
   box-shadow: inset 0 0 40px rgba(0,200,5,0.08);
 }
-#apeCanvas { width: 208px; height: 208px; image-rendering: pixelated; }
+#apeCanvas, #apeArt { width: 208px; height: 208px; image-rendering: pixelated; }
+#apeArt { display: block; object-fit: contain; }
 
 .supply { margin-top: 18px; }
 .supply-top {
