@@ -48,6 +48,7 @@
         <img id="apeArt" src="square.png" alt="APEPIX" />
         <canvas id="apeCanvas" width="16" height="16" class="hidden"></canvas>
       </div>
+      <p id="artHint" class="warn hidden"></p>
 
       <div class="supply">
         <div class="supply-top"><span>MINTED</span><span id="supplyText">— / —</span></div>
@@ -115,6 +116,14 @@
     <p id="txMsg" class="sub">Confirm the transaction in your wallet.</p>
     <a id="txLink" class="mono tx-link hidden" target="_blank" rel="noopener">View on explorer ↗</a>
     <button id="txClose" class="btn btn-ghost hidden">Close</button>
+  </div>
+</div>
+
+<!-- art lightbox -->
+<div id="artModal" class="modal hidden">
+  <div class="modal-art">
+    <img id="artBig" src="square.png" alt="APEPIX collection" />
+    <button id="artClose" class="btn btn-ghost">Close</button>
   </div>
 </div>
 

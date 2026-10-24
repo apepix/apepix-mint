@@ -917,20 +917,27 @@ function drawApe() {
 }
 
 /* Show square.png inside the art frame. If the file is missing/broken,
-   fall back to the procedurally drawn pixel ape so the frame is never empty. */
+   fall back to the procedurally drawn pixel ape so the frame is never empty,
+   and show a hint explaining exactly why (e.g. file not uploaded to the repo). */
 function loadArt() {
-  const img = $("apeArt"), cv = $("apeCanvas");
+  const img = $("apeArt"), cv = $("apeCanvas"), hint = $("artHint");
   const useImg = () => {
     img.classList.remove("hidden");
     cv.classList.add("hidden");
+    if (hint) hint.classList.add("hidden");
     // small pixel art → keep crisp nearest-neighbor upscaling;
     // larger images → smooth scaling instead of a crunchy downscale
     img.style.imageRendering = img.naturalWidth > 0 && img.naturalWidth <= 208 ? "pixelated" : "auto";
+    img.onclick = () => $("artModal").classList.remove("hidden"); // click-to-enlarge
   };
   const useFallback = () => {
     img.classList.add("hidden");
     cv.classList.remove("hidden");
     drawApe();
+    if (hint) {
+      hint.textContent = "square.png not found — upload it next to index.html, keep the name lowercase, then hard-refresh (Ctrl/Cmd + Shift + R).";
+      hint.classList.remove("hidden");
+    }
   };
   if (img.complete) (img.naturalWidth > 0 ? useImg : useFallback)();
   else { img.onload = useImg; img.onerror = useFallback; }
@@ -943,6 +950,10 @@ $("paidMintBtn").onclick = paidMint;
 $("walletClose").onclick = () => $("walletModal").classList.add("hidden");
 $("walletModal").addEventListener("click", (e) => {
   if (e.target === $("walletModal")) $("walletModal").classList.add("hidden");
+});
+$("artClose").onclick = () => $("artModal").classList.add("hidden");
+$("artModal").addEventListener("click", (e) => {
+  if (e.target === $("artModal")) $("artModal").classList.add("hidden");
 });
 $("networkPill").onclick = async () => {
   if (!wallet && !window.ethereum) return toast("No wallet found — install MetaMask or Phantom.", "error");
