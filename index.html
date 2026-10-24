@@ -8,7 +8,7 @@
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦍</text></svg>" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="style.css" />
+<link rel="stylesheet" href="style.css?v=3" />
 </head>
 <body>
 <div class="bg-grid" aria-hidden="true"></div>
@@ -45,7 +45,7 @@
 
     <div class="mint-card">
       <div class="art-frame">
-        <img id="apeArt" src="square.png" alt="APEPIX" />
+        <img id="apeArt" src="square.png?v=3" alt="APEPIX" width="208" height="208" />
       </div>
       <p id="artHint" class="warn hidden"></p>
 
@@ -121,7 +121,7 @@
 <!-- art lightbox -->
 <div id="artModal" class="modal hidden">
   <div class="modal-art">
-    <img id="artBig" src="square.png" alt="APEPIX collection" />
+    <img id="artBig" src="square.png?v=3" alt="APEPIX collection" style="width:min(92vw,680px);height:auto;display:block;margin:0 auto 14px" />
     <button id="artClose" class="btn btn-ghost">Close</button>
   </div>
 </div>
@@ -129,6 +129,6 @@
 <div id="toasts"></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/5.7.2/ethers.umd.min.js"></script>
-<script src="app.js"></script>
+<script src="app.js?v=3"></script>
 </body>
 </html>
