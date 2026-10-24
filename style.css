@@ -125,8 +125,10 @@ h1 {
   display: flex; justify-content: center; padding: 20px 0 14px;
   box-shadow: inset 0 0 40px rgba(0,200,5,0.08);
 }
-#apeCanvas, #apeArt { width: 208px; height: 208px; image-rendering: pixelated; }
-#apeArt { display: block; object-fit: contain; cursor: zoom-in; }
+#apeArt {
+  width: 208px; height: 208px; image-rendering: pixelated;
+  display: block; object-fit: contain; cursor: zoom-in;
+}
 
 /* art lightbox (click the frame image to enlarge) */
 .modal-art { width: min(92vw, 680px); text-align: center; }

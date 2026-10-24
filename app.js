@@ -875,72 +875,26 @@ async function freeMint() {
   }
 }
 
-/* ---------- pixel ape canvas ---------- */
-const APE_MAP = [
-"................",
-"...oooooooooo...",
-"..obbbbbbbbbbo..",
-".obbbbbbbbbbbbo.",
-".obbooooooooobbo",
-"oobffffffffffboo",
-"oobfeepffpeefboo",
-"oobfeepffpeefboo",
-"oobffffffffffboo",
-"oobfffnnffnnfboo",
-".obffffffffffbo.",
-".obffmmmmmmffbo.",
-"..obffffffffbo..",
-"..oobbbbbbbboo..",
-"....oooooooo....",
-"................",
-];
-const BASE_PALETTE = {
-  o: "#181008", b: "#8a5a2b", f: "#eec387",
-  e: "#ffffff", p: "#0a0a0a", n: "#c2803f", m: "#8a3f14",
-};
-
-function drawApe() {
-  const cv = $("apeCanvas"), ctx = cv.getContext("2d");
-  // subtle random fur tint per page load
-  const pal = { ...BASE_PALETTE };
-  const hue = Math.floor(Math.random() * 360);
-  pal.b = `hsl(${hue} 42% 36%)`;
-  pal.f = `hsl(${(hue + 20) % 360} 60% 74%)`;
-  ctx.clearRect(0, 0, 16, 16);
-  APE_MAP.forEach((row, y) => {
-    [...row].forEach((ch, x) => {
-      if (ch === ".") return;
-      ctx.fillStyle = pal[ch];
-      ctx.fillRect(x, y, 1, 1);
-    });
-  });
-}
-
+/* ---------- art frame (square.png) ---------- */
 /* Show square.png inside the art frame. If the file is missing/broken,
-   fall back to the procedurally drawn pixel ape so the frame is never empty,
-   and show a hint explaining exactly why (e.g. file not uploaded to the repo). */
+   a red hint under the frame explains exactly why (e.g. not uploaded). */
 function loadArt() {
-  const img = $("apeArt"), cv = $("apeCanvas"), hint = $("artHint");
-  const useImg = () => {
-    img.classList.remove("hidden");
-    cv.classList.add("hidden");
+  const img = $("apeArt"), hint = $("artHint");
+  const ok = () => {
     if (hint) hint.classList.add("hidden");
     // small pixel art → keep crisp nearest-neighbor upscaling;
     // larger images → smooth scaling instead of a crunchy downscale
     img.style.imageRendering = img.naturalWidth > 0 && img.naturalWidth <= 208 ? "pixelated" : "auto";
     img.onclick = () => $("artModal").classList.remove("hidden"); // click-to-enlarge
   };
-  const useFallback = () => {
-    img.classList.add("hidden");
-    cv.classList.remove("hidden");
-    drawApe();
+  const fail = () => {
     if (hint) {
       hint.textContent = "square.png not found — upload it next to index.html, keep the name lowercase, then hard-refresh (Ctrl/Cmd + Shift + R).";
       hint.classList.remove("hidden");
     }
   };
-  if (img.complete) (img.naturalWidth > 0 ? useImg : useFallback)();
-  else { img.onload = useImg; img.onerror = useFallback; }
+  if (img.complete) (img.naturalWidth > 0 ? ok : fail)();
+  else { img.onload = ok; img.onerror = fail; }
 }
 
 /* ---------- UI wiring ---------- */
